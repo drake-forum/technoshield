@@ -1,0 +1,61 @@
+# TECHNOSHIELD Pipeline Configuration
+
+# Processing interval in seconds
+processing_interval_seconds: 60
+
+# Data sources configuration
+data_sources:
+  - name: security_api
+    type: api
+    url: https://api.example.com/security-events
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    auth:
+      type: bearer
+      token: ${API_TOKEN}
+    events_path: data.events
+    
+  - name: firewall_logs
+    type: file
+    path: /var/log/firewall.log
+    format: syslog
+    
+  - name: ids_alerts
+    type: api
+    url: https://ids.internal/api/alerts
+    headers:
+      Content-Type: application/json
+    auth:
+      type: basic
+      username: admin
+      password: ${IDS_PASSWORD}
+    events_path: alerts
+
+# Alert detection thresholds
+alert_thresholds:
+  authentication_failures: 3
+  port_scan_threshold: 5
+  data_transfer_threshold_mb: 100
+  suspicious_commands:
+    - cmd.exe
+    - powershell.exe -enc
+    - bash -i
+    - nc -e
+
+# Logging configuration
+logging:
+  level: INFO
+  file: pipeline.log
+  max_size_mb: 10
+  backup_count: 5
+  
+# Database configuration
+database:
+  # These settings will be overridden by environment variables if present
+  server: ${POSTGRES_SERVER:-localhost}
+  user: ${POSTGRES_USER:-postgres}
+  password: ${POSTGRES_PASSWORD:-secure_password_here}
+  db_name: ${POSTGRES_DB:-technoshield}
+  pool_size: 5
+  max_overflow: 10
