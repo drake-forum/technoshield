@@ -6,11 +6,11 @@ We at rooter are committed to providing a safe and secure environment for all us
 
 Our Contributers
 
-- drake-forum
-- hiteshi-vishwakarma
-- gaurav-likhitkar
-- darshani-sharma
-- hema-11k
+- [drake-forum](https://drakefolio.netlify.app/)
+- [hiteshi-vishwakarma](https://github.com/hiteshi-vishwakarma)
+- [gourav-likhitkar](https://github.com/gourav-likhitkar)
+- [darshani-sharma](https://github.com/darshani-sharma)
+- [hema-11k](https://github.com/hema-11k)
 
 ## Code of Conduct
 
