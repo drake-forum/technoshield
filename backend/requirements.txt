@@ -1,0 +1,34 @@
+# FastAPI and ASGI server
+fastapi>=0.95.0,<0.96.0
+uvicorn>=0.22.0,<0.23.0
+gunicorn>=20.1.0,<21.0.0
+
+# Database
+sqlalchemy>=1.4.41,<1.5.0
+psycopg2-binary>=2.9.5,<3.0.0
+alembic>=1.10.2,<1.11.0
+
+# Authentication and security
+python-jose[cryptography]>=3.3.0,<3.4.0
+passlib[bcrypt]>=1.7.4,<1.8.0
+python-multipart>=0.0.5,<0.1.0
+
+# Validation and serialization
+pydantic>=1.10.7,<1.11.0
+email-validator>=2.0.0,<2.1.0
+
+# Monitoring and metrics
+prometheus-client>=0.16.0,<0.17.0
+prometheus-fastapi-instrumentator>=5.9.1,<6.0.0
+
+# Utilities
+python-dotenv>=1.0.0,<1.1.0
+tenacity>=8.2.2,<8.3.0
+
+# Compression and performance
+fastapi-gzip>=0.3.0,<0.4.0
+
+# Testing
+pytest>=7.3.1,<7.4.0
+pytest-cov>=4.1.0,<4.2.0
+httpx>=0.24.0,<0.25.0
