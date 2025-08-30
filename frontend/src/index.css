@@ -1,0 +1,532 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light theme (default) */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Theme colors - sync with config.js */
+  --color-primary: #3B82F6;
+  --color-secondary: #10B981;
+  --color-danger: #EF4444;
+  --color-warning: #F59E0B;
+  --color-info: #6366F1;
+  --color-success: #10B981;
+  --color-background: #F9FAFB;
+  --color-text: #1F2937;
+  --color-card: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-input: #FFFFFF;
+  --color-input-border: #D1D5DB;
+  --color-sidebar: #1E293B;
+  --color-sidebar-text: #F3F4F6;
+  --color-header: #FFFFFF;
+  --color-header-text: #1F2937;
+  --color-hover: #F3F4F6;
+  --color-active: #EFF6FF;
+  --color-tooltip: #374151;
+  --color-tooltip-text: #F9FAFB;
+  --color-scrollbar-track: #F1F1F1;
+  --color-scrollbar-thumb: #888888;
+  --color-scrollbar-thumb-hover: #555555;
+  
+  /* Security-specific colors */
+  --color-severity-critical: #DC2626;
+  --color-severity-high: #EA580C;
+  --color-severity-medium: #D97706;
+  --color-severity-low: #65A30D;
+  --color-severity-info: #2563EB;
+  
+  /* Shadow variables */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Custom utility classes */
+@layer components {
+  /* Button styles */
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+  
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-lg shadow overflow-hidden;
+  }
+  
+  .card-header {
+    @apply px-4 py-5 border-b border-gray-200 sm:px-6;
+  }
+  
+  .card-body {
+    @apply px-4 py-5 sm:p-6;
+  }
+  
+  .card-footer {
+    @apply px-4 py-4 border-t border-gray-200 sm:px-6;
+  }
+  
+  /* Form styles */
+  .form-input {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+  
+  /* Alert severity badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-critical {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .badge-high {
+    @apply bg-orange-100 text-orange-800;
+  }
+  
+  .badge-medium {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .badge-low {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  /* Status badges */
+  .status-new {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .status-in-progress {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .status-resolved {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .status-closed {
+    @apply bg-gray-100 text-gray-800;
+  }
+}
+
+/* Animation utilities */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* Dark theme */
+.dark-mode {
+  --color-primary: #60A5FA;
+  --color-secondary: #34D399;
+  --color-danger: #F87171;
+  --color-warning: #FBBF24;
+  --color-info: #818CF8;
+  --color-success: #34D399;
+  --color-background: #111827;
+  --color-text: #F9FAFB;
+  --color-card: #1F2937;
+  --color-border: #374151;
+  --color-input: #374151;
+  --color-input-border: #4B5563;
+  --color-sidebar: #111827;
+  --color-sidebar-text: #F9FAFB;
+  --color-header: #1F2937;
+  --color-header-text: #F9FAFB;
+  --color-hover: #374151;
+  --color-active: #1E40AF;
+  --color-tooltip: #E5E7EB;
+  --color-tooltip-text: #111827;
+  --color-scrollbar-track: #1F2937;
+  --color-scrollbar-thumb: #4B5563;
+  --color-scrollbar-thumb-hover: #6B7280;
+  
+  /* Security-specific colors - slightly adjusted for dark mode */
+  --color-severity-critical: #EF4444;
+  --color-severity-high: #F97316;
+  --color-severity-medium: #F59E0B;
+  --color-severity-low: #84CC16;
+  --color-severity-info: #3B82F6;
+}
+
+/* System preference dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-mode) {
+    --color-primary: #60A5FA;
+    --color-secondary: #34D399;
+    --color-danger: #F87171;
+    --color-warning: #FBBF24;
+    --color-info: #818CF8;
+    --color-success: #34D399;
+    --color-background: #111827;
+    --color-text: #F9FAFB;
+    --color-card: #1F2937;
+    --color-border: #374151;
+    --color-input: #374151;
+    --color-input-border: #4B5563;
+    --color-sidebar: #111827;
+    --color-sidebar-text: #F9FAFB;
+    --color-header: #1F2937;
+    --color-header-text: #F9FAFB;
+    --color-hover: #374151;
+    --color-active: #1E40AF;
+    --color-tooltip: #E5E7EB;
+    --color-tooltip-text: #111827;
+    --color-scrollbar-track: #1F2937;
+    --color-scrollbar-thumb: #4B5563;
+    --color-scrollbar-thumb-hover: #6B7280;
+    
+    /* Security-specific colors - slightly adjusted for dark mode */
+    --color-severity-critical: #EF4444;
+    --color-severity-high: #F97316;
+    --color-severity-medium: #F59E0B;
+    --color-severity-low: #84CC16;
+    --color-severity-info: #3B82F6;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb-hover);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .card-header, .card-body, .card-footer {
+    @apply px-3 py-3;
+  }
+}
+
+/* Security-specific components */
+@layer components {
+  /* Threat level indicators */
+  .threat-indicator {
+    @apply relative inline-block w-3 h-3 rounded-full mr-2;
+  }
+  
+  .threat-critical {
+    @apply bg-red-600;
+    box-shadow: 0 0 8px theme('colors.red.500');
+  }
+  
+  .threat-high {
+    @apply bg-orange-500;
+  }
+  
+  .threat-medium {
+    @apply bg-yellow-500;
+  }
+  
+  .threat-low {
+    @apply bg-green-500;
+  }
+  
+  .threat-info {
+    @apply bg-blue-500;
+  }
+  
+  /* Alert card */
+  .alert-card {
+    @apply border-l-4 p-4 mb-4 rounded-r-md;
+    background-color: var(--color-card);
+  }
+  
+  .alert-card-critical {
+    @apply border-red-600;
+  }
+  
+  .alert-card-high {
+    @apply border-orange-500;
+  }
+  
+  .alert-card-medium {
+    @apply border-yellow-500;
+  }
+  
+  .alert-card-low {
+    @apply border-green-500;
+  }
+  
+  /* Dashboard widgets */
+  .dashboard-widget {
+    @apply rounded-lg overflow-hidden;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+  }
+  
+  .dashboard-widget-header {
+    @apply px-4 py-3 border-b flex justify-between items-center;
+    border-color: var(--color-border);
+  }
+  
+  .dashboard-widget-body {
+    @apply p-4;
+  }
+  
+  /* Security timeline */
+  .security-timeline {
+    @apply relative pl-6;
+  }
+  
+  .timeline-item {
+    @apply relative pb-6;
+  }
+  
+  .timeline-item:before {
+    content: '';
+    @apply absolute top-2 -left-3 w-2 h-2 rounded-full bg-blue-500;
+  }
+  
+  .timeline-item:after {
+    content: '';
+    @apply absolute top-4 -left-2 w-0 h-full border-l;
+    border-color: var(--color-border);
+  }
+  
+  .timeline-item:last-child:after {
+    @apply h-0;
+  }
+  
+  /* Network diagram connections */
+  .network-connection {
+    @apply h-px bg-gray-300 dark:bg-gray-600;
+    position: absolute;
+  }
+  
+  .network-node {
+    @apply rounded-full flex items-center justify-center;
+    background-color: var(--color-card);
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Terminal/console styling */
+  .console {
+    @apply font-mono text-sm p-4 rounded-md overflow-auto;
+    background-color: #1E293B;
+    color: #E5E7EB;
+    max-height: 400px;
+  }
+  
+  .console-line {
+    @apply block mb-1;
+  }
+  
+  .console-prompt {
+    @apply text-green-400 mr-2;
+  }
+  
+  .console-command {
+    @apply text-white;
+  }
+  
+  .console-output {
+    @apply text-gray-300;
+  }
+  
+  .console-error {
+    @apply text-red-400;
+  }
+  
+  .console-warning {
+    @apply text-yellow-400;
+  }
+  
+  .console-success {
+    @apply text-green-400;
+  }
+  
+  /* Threat intelligence feed */
+  .threat-feed {
+    @apply border-l-2 pl-4 space-y-4;
+    border-color: var(--color-border);
+  }
+  
+  .threat-feed-item {
+    @apply pb-4 relative;
+  }
+  
+  .threat-feed-item:before {
+    content: '';
+    @apply absolute -left-5 top-2 w-2 h-2 rounded-full;
+    background-color: var(--color-primary);
+  }
+  
+  /* Security score indicator */
+  .security-score {
+    @apply relative h-2 rounded-full overflow-hidden;
+    background-color: var(--color-border);
+  }
+  
+  .security-score-fill {
+    @apply absolute top-0 left-0 h-full;
+    transition: width 0.5s ease;
+  }
+  
+  .security-score-critical {
+    background-color: var(--color-severity-critical);
+  }
+  
+  .security-score-high {
+    background-color: var(--color-severity-high);
+  }
+  
+  .security-score-medium {
+    background-color: var(--color-severity-medium);
+  }
+  
+  .security-score-low {
+    background-color: var(--color-severity-low);
+  }
+  
+  .security-score-good {
+    background-color: var(--color-success);
+  }
+  
+  /* Incident response workflow */
+  .workflow-step {
+    @apply relative flex items-center;
+  }
+  
+  .workflow-step:not(:last-child):after {
+    content: '';
+    @apply absolute top-1/2 left-10 w-full h-0.5;
+    background-color: var(--color-border);
+    z-index: 0;
+  }
+  
+  .workflow-step-icon {
+    @apply relative z-10 flex items-center justify-center w-8 h-8 rounded-full;
+    background-color: var(--color-card);
+    border: 2px solid var(--color-border);
+  }
+  
+  .workflow-step-active .workflow-step-icon {
+    @apply border-blue-500 text-blue-500;
+  }
+  
+  .workflow-step-completed .workflow-step-icon {
+    @apply bg-green-500 border-green-500 text-white;
+  }
+  
+  /* Data visualization elements */
+  .heatmap-cell {
+    @apply transition-colors duration-200;
+  }
+  
+  .radar-chart-area {
+    @apply fill-current text-blue-500 opacity-20;
+  }
+  
+  .radar-chart-line {
+    @apply stroke-current text-blue-500;
+  }
+  
+  /* Notification badges */
+  .notification-badge {
+    @apply absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full;
+  }
+  
+  /* Threat hunting tools */
+  .search-highlight {
+    @apply bg-yellow-200 dark:bg-yellow-900 px-1 rounded;
+  }
+  
+  .ioc-tag {
+    @apply inline-flex items-center px-2 py-1 rounded-md text-xs font-medium mr-2 mb-2;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+  }
+  
+  .ioc-ip {
+    @apply border-blue-200 text-blue-800 dark:border-blue-800 dark:text-blue-200;
+  }
+  
+  .ioc-hash {
+    @apply border-purple-200 text-purple-800 dark:border-purple-800 dark:text-purple-200;
+  }
+  
+  .ioc-domain {
+    @apply border-green-200 text-green-800 dark:border-green-800 dark:text-green-200;
+  }
+  
+  .ioc-url {
+    @apply border-red-200 text-red-800 dark:border-red-800 dark:text-red-200;
+  }
+}
