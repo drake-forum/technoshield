@@ -141,6 +141,3 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 * All open-source tools & libraries that power TECHNOSHIELD
 * The global cybersecurity community for best practices & inspiration
-
----
-Do you want me to also **add badges** (build status, license, version, tech stack, etc.) at the top for a more professional GitHub look?
