@@ -1,0 +1,163 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:13
+    container_name: technoshield-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - technoshield-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+    container_name: technoshield-backend
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_SERVER=postgres
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - USE_SECURE_COOKIES=${USE_SECURE_COOKIES}
+    networks:
+      - technoshield-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Data Processing Pipeline
+  pipeline:
+    build:
+      context: ./pipeline
+    container_name: technoshield-pipeline
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_SERVER=postgres
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - technoshield-network
+
+  # Frontend Web Application
+  frontend:
+    build:
+      context: ./frontend
+    container_name: technoshield-frontend
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - technoshield-network
+
+  # Nginx Web Server (Reverse Proxy)
+  nginx:
+    image: nginx:alpine
+    container_name: technoshield-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ${SSL_CERT_PATH}:/etc/nginx/ssl/technoshield.crt:ro
+      - ${SSL_KEY_PATH}:/etc/nginx/ssl/technoshield.key:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - technoshield-network
+
+  # Prometheus (Metrics Collection)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: technoshield-prometheus
+    restart: always
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - technoshield-network
+
+  # Grafana (Metrics Visualization)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: technoshield-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana-provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    networks:
+      - technoshield-network
+
+  # Node Exporter (Host Metrics)
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: technoshield-node-exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - technoshield-network
+
+  # cAdvisor (Container Metrics)
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: technoshield-cadvisor
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - technoshield-network
+
+networks:
+  technoshield-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  prometheus_data:
+  grafana_data:
