@@ -76,7 +76,7 @@ technoshield/
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/technoshield.git
+git clone https://github.com/drake-forum/technoshield.git
 cd technoshield
 ```
 
