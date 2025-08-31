@@ -105,6 +105,11 @@ cd frontend
 npm test
 ```
 
+## Repository Structure
+
+![file structure](./doc/File%20Structure.png)
+
+---
 ## Style Guidelines
 
 ### Python Code
