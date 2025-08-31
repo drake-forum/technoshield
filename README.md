@@ -131,7 +131,7 @@ We welcome contributions! Please check our [CONTRIBUTING.md](CONTRIBUTING.md) to
 
 ---
 
-## References  
+## 📚 References  
 For detailed academic references, see [REFERENCES.md](REFERENCES.md).
 
 ---
