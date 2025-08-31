@@ -139,4 +139,4 @@ Expected output should eventually include:
 
 ## Security Contacts
 
-If you discover a security vulnerability in TECHNOSHIELD, please report it by sending an email to security@example.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability in TECHNOSHIELD, please report it by sending an email to technoshield@atomicmail.io. All security vulnerabilities will be promptly addressed.
