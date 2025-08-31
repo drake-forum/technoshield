@@ -107,7 +107,7 @@ npm test
 
 ## Repository Structure
 
-![file structure](./doc/File%20Structure.png)
+![file structure](docs/structure.png)
 
 ---
 ## Style Guidelines
