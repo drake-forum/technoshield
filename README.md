@@ -131,6 +131,11 @@ We welcome contributions! Please check our [CONTRIBUTING.md](CONTRIBUTING.md) to
 
 ---
 
+## References  
+For detailed academic references, see [REFERENCES.md](REFERENCES.md).
+
+---
+
 ## 📜 License
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
