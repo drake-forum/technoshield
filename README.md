@@ -123,7 +123,7 @@ python -m pipeline.main
 
 ## 🤝 Contributing
 
-We welcome contributions! Please check our [CONTRIBUTING.md](CONTRIBUTING.md) to learn about:
+We welcome contributions! Please check our [CONTRIBUTING](CONTRIBUTING.md) to learn about:
 
 * Code of Conduct
 * Contribution workflow
@@ -132,7 +132,7 @@ We welcome contributions! Please check our [CONTRIBUTING.md](CONTRIBUTING.md) to
 ---
 
 ## 📚 References  
-For detailed academic references, see [REFERENCES.md](REFERENCES.md).
+For detailed academic references, see [REFERENCES](REFERENCES.md).
 
 ---
 
